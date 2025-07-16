@@ -1,0 +1,11 @@
+---
+title: "R Projects"
+format: html
+---
+
+About this site
+
+```{r}
+summary(mtcars)
+1 + 1
+```

@@ -1,0 +1,11 @@
+---
+title: "Python Projects"
+format: html
+---
+
+## My Python Projects.
+
+- [Project 1](python-projects.qmd)
+- [Project 2](python-projects-2.qmd)
+
+

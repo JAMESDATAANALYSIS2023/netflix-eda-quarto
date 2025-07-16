@@ -1,0 +1,10 @@
+---
+title: "Six Sigm Projects"
+format: html
+---
+
+## My Six Sigma Projects.
+
+
+- [Project 1](six-sigma-projects.qmd)
+- [Project 2](six-sigma-project-2.qmd)

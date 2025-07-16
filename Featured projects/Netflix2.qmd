@@ -1,0 +1,244 @@
+---
+title: 'Featured Project: Netflix Movie Trends in the 1990s'
+format: html
+execute: 
+  
+  kernel: python3
+  engine: jupyter
+---
+
+### Objective
+
+The objective of this project is to perform an in-depth exploratory data analysis (EDA) of Netflix’s content catalog. We aim to:
+
+-   Identify trends in movie and TV show releases by year and genre.
+
+-   Analyze the distribution of content across countries.
+
+-   Determine patterns in content ratings (e.g., TV-MA, PG, etc.).
+
+-   Provide insights that can support business strategy, such as regional content preferences and genre saturation.
+
+This analysis was conducted using Python and libraries such as pandas, matplotlib, and seaborn, and is presented via interactive visuals in Power BI
+
+### Data Overview
+
+The dataset used in this project was sourced from [Kaggle’s Netflix Movies and TV Shows dataset](https://www.kaggle.com/shivamb/netflix-shows). It contains over 7,000 records of Netflix titles available up to 2021.
+
+#### Key Features: 
+
+-   `title`: Name of the movie or TV show.
+
+-   `type`: Indicates whether the content is a Movie or a TV Show.
+
+-   `director`, `cast`: Names of key personnel.
+
+-   `country`: Country where the content was produced.
+
+-   `date_added`: Date content was added to Netflix.
+
+-   `release_year`: Year the content was released.
+
+-   `rating`: Content rating (e.g., PG, R, TV-MA).
+
+-   `duration`: Length of the content.
+
+-   `listed_in`: Categories or genres.
+
+-   `description`: Brief synopsis.
+
+### Tools Used
+
+-   **Python Libraries**: pandas, matplotlib
+-   **Techniques**: Data filtering, type conversion, value counts, histogram visualization
+
+### Key Questions
+
+1.  What was the most common movie duration in the 1990s?
+2.  How many short action movies (\< 90 minutes) were released in that decade?
+
+### Summary of Findings
+
+-   The most frequent duration was **94 minutes**, showing a standard movie length for the 1990s.
+-   Only **7 short action movies** were released in that time period, indicating a preference for longer runtimes in that genre.
+
+```{python}
+# import Python librairies
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+
+```{python}
+# load the netflix data set as pandas data frame
+Netflix = pd.read_csv("netflix_data.csv")
+```
+
+1.0 Data Preview and Inspection
+
+```{python}
+# to see first 5 columns of data frame
+Netflix.head()
+```
+
+```{python}
+# to see last 5 columns of data frame
+Netflix.tail()
+```
+
+```{python}
+# To see column: missing values in each column, column data type, and memory usage.
+Netflix.info()
+```
+
+```{python}
+# Generate summary statistics for all numeric columns in the Netflix DataFrame
+Netflix.describe()
+```
+
+```{python}
+# calculated the percentage of missing values per column 
+missing_pct = (Netflix.isnull().sum() / len(Netflix)) * 100
+```
+
+```{python}
+# Display the percentage of missing values count for each column: filter only columns with missing values, but since the result is an empty Series
+missing_pct = missing_pct[missing_pct > 0].sort_values(ascending=False).round(2) 
+print(missing_pct)
+```
+
+Data types and conversion
+
+```{python}
+# Display the data type of each column in the Netflix DataFrame
+Netflix.dtypes
+
+```
+
+Convert data_added to date variable
+
+```{python}
+# Convert the "date_added" column to datetime format; invalid entries are set to NaT (Not a Time)
+Netflix["date_added"] = pd.to_datetime(Netflix["date_added"], errors="coerce")
+```
+
+Categorical EDA
+
+```{python}
+# Return a pandas series: Count the frequency of each unique category in the "type" column.
+Netflix["type"].value_counts()
+```
+
+```{python}
+sns.countplot(data= Netflix, x="type")
+plt.show()
+```
+
+```{python}
+# Return a pandas series: Count the proportion of each unique category in the "type" column.
+Netflix["type"].value_counts(normalize=True)
+```
+
+```{python}
+Netflix["country"].value_counts()
+```
+
+```{python}
+Netflix["country"].value_counts(normalize=True)
+```
+
+```{python}
+print(Netflix["country"].nunique())
+```
+
+```{python}
+Netflix["genre"].value_counts()
+```
+
+```{python}
+Netflix["genre"].value_counts(normalize=True)
+```
+
+```{python}
+print(Netflix["genre"].nunique())
+```
+
+Filter Movies to the 1990s
+
+```{python}
+# Filter Movies to the 1990s
+movies_df = Netflix[Netflix["type"] == "Movie"].copy()
+```
+
+```{python}
+# Filter movies released in the 1990s
+movies_90s = movies_df[(movies_df["release_year"] >= 1990) & (movies_df["release_year"] < 2000)]
+```
+
+```{python}
+# Visualize the distribution of movie durations
+plt.hist(movies_90s["duration"])
+plt.title("Distribution of Movie Durations (1990s)")
+plt.xlabel("Duration (minutes)")
+plt.ylabel("Number of Movies")
+plt.show()
+```
+
+```{python}
+min_date = movies_90s["release_year"].min()
+max_date = movies_90s["release_year"].max()
+print(min_date)
+print(max_date)
+```
+
+Answer Question 1: Most Frequent Movie Duration
+
+```{python}
+# Find the most frequent duration
+duration = movies_90s["duration"].mode()[0]  # mode returns a Series, so take the first
+print("Most frequent duration:", duration)
+```
+
+Interpretation:
+
+A duration of 94 minutes suggests that typical 1990s films leaned toward a standard feature-length format — long enough for storytelling but concise enough for wide audience appeal.
+
+This insight aligns with industry patterns from that era, where movies often ranged between 90–120 minutes.
+
+Answer Question 2: Count Short Action Movies \< 90 min
+
+```{python}
+# Filter Action movies from the 1990s
+short_action = movies_90s[(movies_90s["genre"] == "Action") & (movies_90s["duration"] < 90)]
+
+# Count how many Action movies had a duration under 90 minutes
+short_action_count = (short_action["duration"] < 90).sum()
+
+#short_movie_count = short_action.shape[0]
+print("Short Action Movies:", short_action_count)
+```
+
+Interpretation:
+
+Action movies during the 1990s were generally longer than 90 minutes, likely due to their complex plots, action sequences, and production style.
+
+The relatively small number (7 out of all action movies) implies that short-form action content was rare, possibly limited to niche markets or lower-budget productions.
+
+### Insights
+
+-   A majority of 1990s Netflix movies are around **94 minutes**, suggesting a consistent production format.
+-   **Action** movies during the same decade were **rarely shorter than 90 minutes**, hinting at genre-driven runtime requirements.
+
+------------------------------------------------------------------------
+
+### Next Steps
+
+-   Extend the analysis to other genres or time periods (2000s, 2010s)
+-   Add more complex filters (e.g., by country or rating)
+-   Consider clustering movies by duration + genre + country for pattern discovery (Project 2)
+
+------------------------------------------------------------------------
+
+## Portfolio Use
+
+This project demonstrates ability to: - Clean and preprocess a real-world dataset - Apply basic statistics and visualization - Answer business-relevant questions using data

@@ -1,0 +1,63 @@
+---
+title: ""
+format:
+  html:
+    toc: false
+    page-layout: full
+---
+
+<!-- Title and Image -->
+<div style="text-align: center; margin-bottom: 2rem;">
+  <h1>About Me</h1>
+  <img src="images/james.jpg" alt="James Peters Photo"
+       width="180"
+       style="border-radius: 50%; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); margin-top: 1rem;" />
+</div>
+
+<!-- Bio Text Section -->
+<div style="max-width: 750px; margin: auto; text-align: center;">
+  <!-- Paste your About Me text here -->
+</div>
+
+Hi, I’m **James Peters** — a U.S. military veteran turned data professional with a deep passion for transforming messy data into meaningful insights.
+
+I bring over **7 years of experience** in business analysis, including hands-on work with **SQL**, **SAS**, and **Oracle**, as well as advanced training in **Python, R, Power BI, and Six Sigma methodology**. My career has spanned financial services, airline operations, and process improvement — where I’ve helped teams move from gut instinct to data-backed decisions.
+
+---
+
+## 🔍 My Focus Areas
+
+- 📊 **Analytics & Business Intelligence**  
+  Crafting dashboards and reports that turn complex metrics into actionable stories.
+
+- 🤖 **Data Science & Machine Learning**  
+  Using models to uncover patterns, predict outcomes, and automate insight generation.
+
+- 🛠️ **Process Optimization**  
+  Leveraging Lean Six Sigma to streamline operations and reduce inefficiencies.
+
+- 🌐 **Cloud & Data Engineering Foundations**  
+  Actively developing skills in Azure and modern data infrastructure.
+
+---
+
+## 🎯 My Mission
+
+> “Use data with integrity, clarity, and creativity — to improve systems, empower people, and make a difference.”
+
+---
+
+## 💡 Quick Facts
+
+- 🎓 Master’s in Advanced Data Analytics  
+- 🎓 Currently pursuing a second Master’s in Business Analytics  
+- 🔧 Building a portfolio across R, Python, Excel, and Six Sigma  
+- 🧭 Purpose-driven. Detail-oriented. Systems thinker.
+
+---
+
+## 📬 Let’s Connect
+
+- [LinkedIn](https://www.linkedin.com/in/james-g-peters-jr/)
+- [GitHub](https://github.com/YOUR_USERNAME)  
+Feel free to reach out — I’m always open to new projects, ideas, and collaborations.

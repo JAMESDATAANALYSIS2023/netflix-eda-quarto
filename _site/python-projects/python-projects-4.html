@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>James Peters | Data &amp; Analytics - Numerical_eda</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">James Peters | Data &amp; Analytics</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about Me.html" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../Netflix2.html" rel="" target="">
+ <span class="menu-text">Featured Projects</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#range-min-max" id="toc-range-min-max" class="nav-link active" data-scroll-target="#range-min-max">Range: Min &amp; Max</a></li>
+  <li><a href="#skewness-analysis-mean-vs.-median-are-the-vaiables-skewed" id="toc-skewness-analysis-mean-vs.-median-are-the-vaiables-skewed" class="nav-link" data-scroll-target="#skewness-analysis-mean-vs.-median-are-the-vaiables-skewed">Skewness Analysis: Mean vs.&nbsp;Median: Are the vaiables skewed</a>
+  <ul class="collapse">
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></li>
+  <li><a href="#analysis-of-spread-standard-deviation" id="toc-analysis-of-spread-standard-deviation" class="nav-link" data-scroll-target="#analysis-of-spread-standard-deviation">Analysis of Spread: Standard Deviation</a>
+  <ul class="collapse">
+  <li><a href="#distance-to-nearest-town" id="toc-distance-to-nearest-town" class="nav-link" data-scroll-target="#distance-to-nearest-town">Distance to Nearest Town</a></li>
+  <li><a href="#population-served" id="toc-population-served" class="nav-link" data-scroll-target="#population-served">Population Served</a></li>
+  <li><a href="#installation-year" id="toc-installation-year" class="nav-link" data-scroll-target="#installation-year">Installation Year</a></li>
+  <li><a href="#water-pump-age" id="toc-water-pump-age" class="nav-link" data-scroll-target="#water-pump-age">Water Pump Age</a></li>
+  </ul></li>
+  <li><a href="#distribution-analysis-of-numerical-variables" id="toc-distribution-analysis-of-numerical-variables" class="nav-link" data-scroll-target="#distribution-analysis-of-numerical-variables">Distribution Analysis of Numerical Variables</a>
+  <ul class="collapse">
+  <li><a href="#observations" id="toc-observations" class="nav-link" data-scroll-target="#observations">Observations</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></li>
+  <li><a href="#outlier-detection-using-boxplots" id="toc-outlier-detection-using-boxplots" class="nav-link" data-scroll-target="#outlier-detection-using-boxplots">Outlier Detection Using Boxplots</a>
+  <ul class="collapse">
+  <li><a href="#observations-1" id="toc-observations-1" class="nav-link" data-scroll-target="#observations-1">Observations:</a></li>
+  <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1">Conclusion:</a></li>
+  </ul></li>
+  <li><a href="#correlation-analysis-of-numerical-variables" id="toc-correlation-analysis-of-numerical-variables" class="nav-link" data-scroll-target="#correlation-analysis-of-numerical-variables">Correlation Analysis of Numerical Variables</a>
+  <ul class="collapse">
+  <li><a href="#key-observations" id="toc-key-observations" class="nav-link" data-scroll-target="#key-observations">Key Observations:</a></li>
+  <li><a href="#conclusion-2" id="toc-conclusion-2" class="nav-link" data-scroll-target="#conclusion-2">Conclusion:</a></li>
+  </ul></li>
+  <li><a href="#population-served-over-time-by-functioning-status" id="toc-population-served-over-time-by-functioning-status" class="nav-link" data-scroll-target="#population-served-over-time-by-functioning-status">Population Served Over Time by Functioning Status</a>
+  <ul class="collapse">
+  <li><a href="#key-observations-1" id="toc-key-observations-1" class="nav-link" data-scroll-target="#key-observations-1">Key Observations:</a></li>
+  <li><a href="#conclusion-3" id="toc-conclusion-3" class="nav-link" data-scroll-target="#conclusion-3">Conclusion:</a></li>
+  </ul></li>
+  <li><a href="#numerical-variables-vs.-functioning-status" id="toc-numerical-variables-vs.-functioning-status" class="nav-link" data-scroll-target="#numerical-variables-vs.-functioning-status">Numerical Variables vs.&nbsp;Functioning Status</a>
+  <ul class="collapse">
+  <li><a href="#key-observations-2" id="toc-key-observations-2" class="nav-link" data-scroll-target="#key-observations-2">Key Observations</a></li>
+  <li><a href="#conclusion-4" id="toc-conclusion-4" class="nav-link" data-scroll-target="#conclusion-4">Conclusion</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Numerical_eda</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This code imports the os as a module to interact with the operating system</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># To display the current working directory to identity where Python is excecuting the scripts.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Current working directory:"</span>, os.getcwd())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Current working directory: C:\Users\jgpet\OneDrive\Desktop\DATA ANALYST\Data Analytic Portfolio\Lets make Musicupdated\python-projects</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the working directory to the folder containing the file</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>os.chdir(<span class="vs">r"C:\Users\jgpet\OneDrive\Desktop\Gradiate school\2025\DSCI 5240\Final Project"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify the change</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"New working directory:"</span>, os.getcwd())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>New working directory: C:\Users\jgpet\OneDrive\Desktop\Gradiate school\2025\DSCI 5240\Final Project</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data file inot python as a pandas data frame</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data into Data frame using row 1 as the header</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>Final_project <span class="op">=</span> pd.read_csv(<span class="st">"DSCI 5240 Project Data.csv"</span>, header<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure all columns are displayed in a table format</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.max_rows"</span>, <span class="va">None</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.max_columns"</span>, <span class="va">None</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.width"</span>, <span class="dv">1000</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.colheader_justify"</span>, <span class="st">"center"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>Final_project.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Water Pump ID</th>
+<th data-quarto-table-cell-role="th">Water Source Type</th>
+<th data-quarto-table-cell-role="th">Water Quality</th>
+<th data-quarto-table-cell-role="th">Distance to Nearest Town</th>
+<th data-quarto-table-cell-role="th">Population Served</th>
+<th data-quarto-table-cell-role="th">Installation Year</th>
+<th data-quarto-table-cell-role="th">Funder</th>
+<th data-quarto-table-cell-role="th">Payment Type</th>
+<th data-quarto-table-cell-role="th">Water Pump Age</th>
+<th data-quarto-table-cell-role="th">Pump Type</th>
+<th data-quarto-table-cell-role="th">GPS Coordinates</th>
+<th data-quarto-table-cell-role="th">Functioning Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>WP001</td>
+<td>Well</td>
+<td>Clean</td>
+<td>44.0</td>
+<td>13000.0</td>
+<td>2006.0</td>
+<td>World Bank</td>
+<td>Free</td>
+<td>18.0</td>
+<td>Motorized Pump</td>
+<td>(-20.599463060030295, 26.696000047794744)</td>
+<td>Functioning</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>WP002</td>
+<td>Lake</td>
+<td>Clean</td>
+<td>13.0</td>
+<td>13000.0</td>
+<td>1990.0</td>
+<td>Red Cross</td>
+<td>Free</td>
+<td>34.0</td>
+<td>Hand Pump</td>
+<td>(-20.69129769992364, 23.313405231404484)</td>
+<td>Not Functioning</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>WP003</td>
+<td>Lake</td>
+<td>Clean</td>
+<td>27.0</td>
+<td>12000.0</td>
+<td>1997.0</td>
+<td>Oxfam</td>
+<td>Pay per use</td>
+<td>27.0</td>
+<td>Hand Pump</td>
+<td>(-19.830951420391948, 26.650358442338003)</td>
+<td>Not Functioning</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>WP004</td>
+<td>Well</td>
+<td>Clean</td>
+<td>14.0</td>
+<td>9000.0</td>
+<td>1992.0</td>
+<td>Oxfam</td>
+<td>Pay per use</td>
+<td>32.0</td>
+<td>NaN</td>
+<td>(-22.335866062765565, 22.83485684389231)</td>
+<td>Functioning</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>WP005</td>
+<td>Lake</td>
+<td>Clean</td>
+<td>41.0</td>
+<td>16000.0</td>
+<td>2006.0</td>
+<td>NaN</td>
+<td>Pay per use</td>
+<td>18.0</td>
+<td>Hand Pump</td>
+<td>(-21.099305692773278, 24.799143614430015)</td>
+<td>Functioning</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ol type="1">
+<li>Categorical variables: Water Source Type, Water Quality, Funder, Payment Type, Pump Type, Functioning Status</li>
+<li>Integer: Installation Year, Water Pump Age, Distance to Nearest Town, Population Served</li>
+</ol>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Final_project.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 5000 entries, 0 to 4999
+Data columns (total 12 columns):
+ #   Column                    Non-Null Count  Dtype  
+---  ------                    --------------  -----  
+ 0   Water Pump ID             4750 non-null   object 
+ 1   Water Source Type         4750 non-null   object 
+ 2   Water Quality             4750 non-null   object 
+ 3   Distance to Nearest Town  4750 non-null   float64
+ 4   Population Served         4750 non-null   float64
+ 5   Installation Year         4750 non-null   float64
+ 6   Funder                    4750 non-null   object 
+ 7   Payment Type              4750 non-null   object 
+ 8   Water Pump Age            4750 non-null   float64
+ 9   Pump Type                 4750 non-null   object 
+ 10  GPS Coordinates           4750 non-null   object 
+ 11  Functioning Status        4750 non-null   object 
+dtypes: float64(4), object(8)
+memory usage: 468.9+ KB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Final_project.value_counts(<span class="st">"Water Source Type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>Water Source Type
+Lake        2377
+Well        1641
+River        578
+Borehole     154
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>Water Source has 4 categories</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Final_project.value_counts(<span class="st">"Water Quality"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>Water Quality
+Clean           4232
+Contaminated     518
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>Water Source has 3 categories</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Final_project.value_counts(<span class="st">"Funder"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>Funder
+Red Cross     1719
+Oxfam         1417
+USAID          705
+UNICEF         534
+World Bank     375
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>Water Source has 6 categories</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Final_project.value_counts(<span class="st">"Payment Type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>Payment Type
+Pay per use    3567
+Free           1183
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>Water Source has 3 categories</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Final_project.value_counts(<span class="st">"Pump Type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>Pump Type
+Hand Pump         2470
+Motorized Pump    1832
+Solar Pump         448
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>Water Source has 4 categories</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Final_project.value_counts(<span class="st">"Functioning Status"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>Functioning Status
+Not Functioning    2793
+Functioning        1957
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>Water Source has 3 categories</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For numerical columns</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>Final_project.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Distance to Nearest Town</th>
+<th data-quarto-table-cell-role="th">Population Served</th>
+<th data-quarto-table-cell-role="th">Installation Year</th>
+<th data-quarto-table-cell-role="th">Water Pump Age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>4750.000000</td>
+<td>4750.000000</td>
+<td>4750.000000</td>
+<td>4750.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>33.605684</td>
+<td>13020.210526</td>
+<td>2005.122947</td>
+<td>18.921895</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>14.203737</td>
+<td>2974.803284</td>
+<td>8.893727</td>
+<td>8.881974</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>-3.000000</td>
+<td>2000.000000</td>
+<td>1990.000000</td>
+<td>4.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>21.000000</td>
+<td>11000.000000</td>
+<td>1997.000000</td>
+<td>11.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>35.000000</td>
+<td>13000.000000</td>
+<td>2005.000000</td>
+<td>19.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>44.000000</td>
+<td>15000.000000</td>
+<td>2013.000000</td>
+<td>27.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>76.000000</td>
+<td>22000.000000</td>
+<td>2020.000000</td>
+<td>34.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ol type="1">
+<li>Should we convert to Ineger?</li>
+</ol>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display missing values count for each column</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Final_project.isnull().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>Water Pump ID               250
+Water Source Type           250
+Water Quality               250
+Distance to Nearest Town    250
+Population Served           250
+Installation Year           250
+Funder                      250
+Payment Type                250
+Water Pump Age              250
+Pump Type                   250
+GPS Coordinates             250
+Functioning Status          250
+dtype: int64</code></pre>
+</div>
+</div>
+<p>A. Handle missing values</p>
+<ol type="1">
+<li>categorical_columns: Water Source Type, Water Quality, Funder, Payment Type, Pump Type, Functioning Status filled with mode</li>
+<li>numerical_columns: Distance to Nearest Town, Population Served, Installation Year, Water Pump Age filed with the median</li>
+<li>Dropped columns Water Pump ID and GPS Coordinates</li>
+</ol>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill categorical columns with the mode</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>categorical_columns <span class="op">=</span> [<span class="st">'Water Source Type'</span>, <span class="st">'Water Quality'</span>, <span class="st">'Funder'</span>, <span class="st">'Payment Type'</span>, <span class="st">'Pump Type'</span>, <span class="st">'Functioning Status'</span>]</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> column <span class="kw">in</span> categorical_columns:</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    Final_project[column] <span class="op">=</span> Final_project[column].fillna(Final_project[column].mode()[<span class="dv">0</span>])</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill numerical columns with the median</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>numerical_columns <span class="op">=</span> [<span class="st">'Distance to Nearest Town'</span>, <span class="st">'Population Served'</span>, <span class="st">'Installation Year'</span>, <span class="st">'Water Pump Age'</span>]</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> column <span class="kw">in</span> numerical_columns:</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    Final_project[column] <span class="op">=</span> Final_project[column].fillna(Final_project[column].median())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to drop columns Water Pump ID and GPS Coordinates: Do they add value to the dataset?</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>Final_project_clean <span class="op">=</span> Final_project.drop(columns<span class="op">=</span>[<span class="st">'Water Pump ID'</span>, <span class="st">'GPS Coordinates'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Final_project_clean.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 5000 entries, 0 to 4999
+Data columns (total 10 columns):
+ #   Column                    Non-Null Count  Dtype  
+---  ------                    --------------  -----  
+ 0   Water Source Type         5000 non-null   object 
+ 1   Water Quality             5000 non-null   object 
+ 2   Distance to Nearest Town  5000 non-null   float64
+ 3   Population Served         5000 non-null   float64
+ 4   Installation Year         5000 non-null   float64
+ 5   Funder                    5000 non-null   object 
+ 6   Payment Type              5000 non-null   object 
+ 7   Water Pump Age            5000 non-null   float64
+ 8   Pump Type                 5000 non-null   object 
+ 9   Functioning Status        5000 non-null   object 
+dtypes: float64(4), object(6)
+memory usage: 390.8+ KB</code></pre>
+</div>
+</div>
+<p>Data types 1. Convert to string: Water Source Type, Water Quality, Funder, Payment Type, Pump Type, Functioning Status 2. Convert to Integer Installation Year, Water Pump Age, Distance to Nearest Town, Population Served?</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert data types to strings</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>Final_project_clean[<span class="st">'Water Source Type'</span>] <span class="op">=</span> Final_project_clean[<span class="st">'Water Source Type'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>Final_project_clean[<span class="st">'Water Quality'</span>] <span class="op">=</span> Final_project_clean[<span class="st">'Water Quality'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>Final_project_clean[<span class="st">'Funder'</span>] <span class="op">=</span> Final_project_clean[<span class="st">'Funder'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>Final_project_clean[<span class="st">'Payment Type'</span>] <span class="op">=</span> Final_project_clean[<span class="st">'Payment Type'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>Final_project_clean[<span class="st">'Pump Type'</span>] <span class="op">=</span> Final_project_clean[<span class="st">'Pump Type'</span>].astype(<span class="st">'category'</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>Final_project_clean[<span class="st">'Functioning Status'</span>] <span class="op">=</span> Final_project_clean[<span class="st">'Functioning Status'</span>].astype(<span class="st">'category'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert data types to Integer: Installation Year, Water Pump Age, Distance to Nearest Town, Population Served</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>Final_project_clean[<span class="st">'Installation Year'</span>] <span class="op">=</span> Final_project_clean[<span class="st">'Installation Year'</span>].astype(<span class="st">'int'</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>Final_project_clean[<span class="st">'Water Pump Age'</span>] <span class="op">=</span> Final_project_clean[<span class="st">'Water Pump Age'</span>].astype(<span class="st">'int'</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>Final_project_clean[<span class="st">'Distance to Nearest Town'</span>] <span class="op">=</span> Final_project_clean[<span class="st">'Distance to Nearest Town'</span>].astype(<span class="st">'int'</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>Final_project_clean[<span class="st">'Population Served'</span>] <span class="op">=</span> Final_project_clean[<span class="st">'Population Served'</span>].astype(<span class="st">'int'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>Final_project_clean.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 5000 entries, 0 to 4999
+Data columns (total 10 columns):
+ #   Column                    Non-Null Count  Dtype   
+---  ------                    --------------  -----   
+ 0   Water Source Type         5000 non-null   category
+ 1   Water Quality             5000 non-null   category
+ 2   Distance to Nearest Town  5000 non-null   int64   
+ 3   Population Served         5000 non-null   int64   
+ 4   Installation Year         5000 non-null   int64   
+ 5   Funder                    5000 non-null   category
+ 6   Payment Type              5000 non-null   category
+ 7   Water Pump Age            5000 non-null   int64   
+ 8   Pump Type                 5000 non-null   category
+ 9   Functioning Status        5000 non-null   category
+dtypes: category(6), int64(4)
+memory usage: 186.6 KB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Final_project_clean.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Water Source Type</th>
+<th data-quarto-table-cell-role="th">Water Quality</th>
+<th data-quarto-table-cell-role="th">Distance to Nearest Town</th>
+<th data-quarto-table-cell-role="th">Population Served</th>
+<th data-quarto-table-cell-role="th">Installation Year</th>
+<th data-quarto-table-cell-role="th">Funder</th>
+<th data-quarto-table-cell-role="th">Payment Type</th>
+<th data-quarto-table-cell-role="th">Water Pump Age</th>
+<th data-quarto-table-cell-role="th">Pump Type</th>
+<th data-quarto-table-cell-role="th">Functioning Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Well</td>
+<td>Clean</td>
+<td>44</td>
+<td>13000</td>
+<td>2006</td>
+<td>World Bank</td>
+<td>Free</td>
+<td>18</td>
+<td>Motorized Pump</td>
+<td>Functioning</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Lake</td>
+<td>Clean</td>
+<td>13</td>
+<td>13000</td>
+<td>1990</td>
+<td>Red Cross</td>
+<td>Free</td>
+<td>34</td>
+<td>Hand Pump</td>
+<td>Not Functioning</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Lake</td>
+<td>Clean</td>
+<td>27</td>
+<td>12000</td>
+<td>1997</td>
+<td>Oxfam</td>
+<td>Pay per use</td>
+<td>27</td>
+<td>Hand Pump</td>
+<td>Not Functioning</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Well</td>
+<td>Clean</td>
+<td>14</td>
+<td>9000</td>
+<td>1992</td>
+<td>Oxfam</td>
+<td>Pay per use</td>
+<td>32</td>
+<td>Hand Pump</td>
+<td>Functioning</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Lake</td>
+<td>Clean</td>
+<td>41</td>
+<td>16000</td>
+<td>2006</td>
+<td>Red Cross</td>
+<td>Pay per use</td>
+<td>18</td>
+<td>Hand Pump</td>
+<td>Functioning</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Categorical Values</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Final_project_clean.value_counts(<span class="st">"Water Source Type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>Water Source Type
+Lake        2627
+Well        1641
+River        578
+Borehole     154
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Final_project_clean.value_counts(<span class="st">"Water Quality"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>Water Quality
+Clean           4482
+Contaminated     518
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>Final_project_clean.value_counts(<span class="st">"Funder"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>Funder
+Red Cross     1969
+Oxfam         1417
+USAID          705
+UNICEF         534
+World Bank     375
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>Final_project_clean.value_counts(<span class="st">"Payment Type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<pre><code>Payment Type
+Pay per use    3817
+Free           1183
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>Final_project_clean.value_counts(<span class="st">"Pump Type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>Pump Type
+Hand Pump         2720
+Motorized Pump    1832
+Solar Pump         448
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>Final_project_clean.value_counts(<span class="st">"Functioning Status"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre><code>Functioning Status
+Not Functioning    3043
+Functioning        1957
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For numerical columns</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>Final_project_clean.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Distance to Nearest Town</th>
+<th data-quarto-table-cell-role="th">Population Served</th>
+<th data-quarto-table-cell-role="th">Installation Year</th>
+<th data-quarto-table-cell-role="th">Water Pump Age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>5000.000000</td>
+<td>5000.000000</td>
+<td>5000.000000</td>
+<td>5000.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>33.675400</td>
+<td>13019.200000</td>
+<td>2005.116800</td>
+<td>18.925800</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>13.847353</td>
+<td>2899.467665</td>
+<td>8.668529</td>
+<td>8.657048</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>-3.000000</td>
+<td>2000.000000</td>
+<td>1990.000000</td>
+<td>4.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>22.000000</td>
+<td>11000.000000</td>
+<td>1998.000000</td>
+<td>12.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>35.000000</td>
+<td>13000.000000</td>
+<td>2005.000000</td>
+<td>19.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>44.000000</td>
+<td>15000.000000</td>
+<td>2012.000000</td>
+<td>26.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>76.000000</td>
+<td>22000.000000</td>
+<td>2020.000000</td>
+<td>34.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="range-min-max" class="level3">
+<h3 class="anchored" data-anchor-id="range-min-max">Range: Min &amp; Max</h3>
+<p><strong>Distance to Nearest Town</strong>: Min: -3.0 Max: 76.0, <strong>Population Served</strong>: Min: 2000.0 Max: 22000.0, <strong>Installation Year</strong>: Min: 1990.0 Max: 2020.0, <strong>Water Pump Age</strong>: Min: 4.0 Max: 34.0</p>
+<p><strong>Note:</strong> The Distance to Nearest Town has an <strong>invalid values of -3.0</strong>, which is not feasible for a geographic distance. This will require <strong>data cleaning</strong> to remove or correct the invalid entry.</p>
+<p>Skewness Analysis: Mean vs.&nbsp;Median</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>numerical_columns <span class="op">=</span> [<span class="st">'Distance to Nearest Town'</span>, <span class="st">'Population Served'</span>, <span class="st">'Installation Year'</span>, <span class="st">'Water Pump Age'</span>]</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> numerical_columns:</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    mean_val <span class="op">=</span> Final_project_clean[col].mean()</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    median_val <span class="op">=</span> Final_project_clean[col].median()</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">: Mean = </span><span class="sc">{</span>mean_val<span class="sc">:.2f}</span><span class="ss">, Median = </span><span class="sc">{</span>median_val<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> mean_val <span class="op">&gt;</span> median_val:</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> appears to be **right-skewed** (mean &gt; median)</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> mean_val <span class="op">&lt;</span> median_val:</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> appears to be **left-skewed** (mean &lt; median)</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> appears to be **symmetric** (mean ≈ median)</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Distance to Nearest Town: Mean = 33.68, Median = 35.00
+Distance to Nearest Town appears to be **left-skewed** (mean &lt; median)
+
+Population Served: Mean = 13019.20, Median = 13000.00
+Population Served appears to be **right-skewed** (mean &gt; median)
+
+Installation Year: Mean = 2005.12, Median = 2005.00
+Installation Year appears to be **right-skewed** (mean &gt; median)
+
+Water Pump Age: Mean = 18.93, Median = 19.00
+Water Pump Age appears to be **left-skewed** (mean &lt; median)
+</code></pre>
+</div>
+</div>
+</section>
+<section id="skewness-analysis-mean-vs.-median-are-the-vaiables-skewed" class="level2">
+<h2 class="anchored" data-anchor-id="skewness-analysis-mean-vs.-median-are-the-vaiables-skewed">Skewness Analysis: Mean vs.&nbsp;Median: Are the vaiables skewed</h2>
+<ul>
+<li><p><strong>Population Served</strong>: Mean = 13019.2, Median = 13000<br>
+This suggests that the distribution is approximately <strong>symmetric</strong>.</p></li>
+<li><p><strong>Distance to Nearest Town</strong>: Mean = 33.7, Median = 35<br>
+This indicates a slight <strong>left skew</strong>, potentially due to the invalid <code>-3</code> value, which will be addressed during data cleaning.</p></li>
+<li><p><strong>Installation Year</strong>: Mean = 2005.1, Median = 2005<br>
+This distribution is approximately <strong>symmetric</strong>.</p></li>
+<li><p><strong>Water Pump Age</strong>: Mean = 18.9, Median = 19<br>
+This distribution is approximately <strong>symmetric</strong>.</p></li>
+</ul>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<p>The skewness analysis helps us identify whether each numerical variable has a balanced distribution or is influenced by <strong>outliers</strong> or <strong>natural skewness</strong> (e.g., older pumps might be rare, shifting the age distribution). This is important when choosing modeling techniques later.</p>
+<p>Standard Deviation <strong><em>What Does Standard Deviation Tell You?</em></strong></p>
+<ul>
+<li>Low Standard Deviation: Data points are close to the mean (low spread).</li>
+<li>High Standard Deviation: Data points are widely spread out from the mean.</li>
+<li>Comparing the standard deviation to the mean gives a sense of relative spread.</li>
+</ul>
+</section>
+</section>
+<section id="analysis-of-spread-standard-deviation" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-spread-standard-deviation">Analysis of Spread: Standard Deviation</h2>
+<section id="distance-to-nearest-town" class="level3">
+<h3 class="anchored" data-anchor-id="distance-to-nearest-town">Distance to Nearest Town</h3>
+<ul>
+<li>Mean: 33.68 km</li>
+<li>Standard Deviation: 13.85 km</li>
+<li>Interpretation: There is <strong>moderate spread</strong> — some pumps are very close to towns, while others are quite far away.</li>
+<li>This wide spread may affect accessibility and maintenance.</li>
+</ul>
+</section>
+<section id="population-served" class="level3">
+<h3 class="anchored" data-anchor-id="population-served">Population Served</h3>
+<ul>
+<li>Mean: 13019.2 people</li>
+<li>Standard Deviation: 2899.47 people</li>
+<li>Interpretation: There is a <strong>large spread</strong> in population served, indicating that some water points serve much larger communities</li>
+<li>than others. This variance could impact pump wear and tear, water quality, and functionality.</li>
+</ul>
+</section>
+<section id="installation-year" class="level3">
+<h3 class="anchored" data-anchor-id="installation-year">Installation Year</h3>
+<ul>
+<li>Mean: 2005.12</li>
+<li>Standard Deviation: 8.67 years</li>
+<li>Interpretation: This is a <strong>relatively low spread</strong>, meaning most pumps were installed within a similar timeframe. This could indicate</li>
+<li>consistent development efforts over time.</li>
+</ul>
+</section>
+<section id="water-pump-age" class="level3">
+<h3 class="anchored" data-anchor-id="water-pump-age">Water Pump Age</h3>
+<ul>
+<li>Mean: 18.93 years</li>
+<li>Standard Deviation: 8.66 years</li>
+<li>Interpretation: Pump age shows <strong>moderate spread</strong>, with some pumps significantly older than others. Older pumps may be more prone</li>
+<li>to breakdowns, which could explain patterns seen in the <code>Functioning Status</code> if any.</li>
+</ul>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> numerical_columns:</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    sns.histplot(Final_project_clean[col], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'Distribution of </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-31-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-31-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-31-output-3.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-31-output-4.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="distribution-analysis-of-numerical-variables" class="level2">
+<h2 class="anchored" data-anchor-id="distribution-analysis-of-numerical-variables">Distribution Analysis of Numerical Variables</h2>
+<p>To better understand the <strong>spread and shape</strong> of the numerical variables in the dataset, histograms with density curves (KDE) were generated for:</p>
+<ul>
+<li>Distance to Nearest Town</li>
+<li>Population Served</li>
+<li>Installation Year</li>
+<li>Water Pump Age</li>
+</ul>
+<section id="observations" class="level3">
+<h3 class="anchored" data-anchor-id="observations">Observations</h3>
+<ul>
+<li><strong>Distance to Nearest Town</strong>:
+<ul>
+<li>The distribution appears roughly <strong>bimodal</strong>, indicating two distinct groups — pumps either located very close to towns, or much farther away.</li>
+<li>The presence of a negative distance (anomalous value) was also detected and will require data cleaning.</li>
+</ul></li>
+<li><strong>Population Served</strong>:
+<ul>
+<li>The distribution is <strong>slightly right-skewed</strong>, meaning a small number of pumps serve very large populations compared to the majority.</li>
+<li>This skewness could indicate a few <strong>outliers</strong> — large water systems serving exceptionally large communities.</li>
+</ul></li>
+<li><strong>Installation Year</strong>:
+<ul>
+<li>The data is <strong>centered around the 2000s</strong>, showing a peak in installations during that period.</li>
+<li>The distribution confirms that most pumps were installed between 1995 and 2015, aligning with global infrastructure development initiatives.</li>
+</ul></li>
+<li><strong>Water Pump Age</strong>:
+<ul>
+<li>The age distribution is fairly <strong>even</strong>, but slightly skewed toward older pumps.</li>
+<li>This suggests that some pumps have been operational for much longer than others, potentially impacting their functionality.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>These distributions provide valuable insight into the <strong>data’s characteristics</strong>, potential <strong>outliers</strong>, and <strong>patterns</strong> that could influence later analysis, such as clustering or modeling pump functionality.</p>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To detect outliers</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, col <span class="kw">in</span> <span class="bu">enumerate</span>(numerical_columns, <span class="dv">1</span>):</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, i)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    sns.boxplot(x<span class="op">=</span>Final_project_clean[col])</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'Boxplot of </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-32-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="outlier-detection-using-boxplots" class="level2">
+<h2 class="anchored" data-anchor-id="outlier-detection-using-boxplots">Outlier Detection Using Boxplots</h2>
+<p>Boxplots were generated for the numerical variables to <strong>identify potential outliers</strong> and analyze the spread of the data.</p>
+<section id="observations-1" class="level3">
+<h3 class="anchored" data-anchor-id="observations-1">Observations:</h3>
+<ul>
+<li><strong>Distance to Nearest Town</strong>:
+<ul>
+<li>A negative value (-3) was detected, which is an invalid distance and will require data cleaning.</li>
+<li>There are a few high-distance values that might be legitimate but should be investigated.</li>
+</ul></li>
+<li><strong>Population Served</strong>:
+<ul>
+<li>Some extreme values appear on the higher end, indicating that a few pumps serve significantly larger populations.</li>
+<li>This could be due to large-scale water distribution systems, but further investigation is needed to determine if these are <strong>valid or data entry errors</strong>.</li>
+</ul></li>
+<li><strong>Installation Year</strong>:
+<ul>
+<li>No significant outliers detected. The values fall within a reasonable range (1990–2020), aligning with expected infrastructure development trends.</li>
+</ul></li>
+<li><strong>Water Pump Age</strong>:
+<ul>
+<li>Some older pumps seem to be outliers, but given that pumps can remain operational for long periods, these might be valid.</li>
+<li>Further analysis could explore whether older pumps have a higher likelihood of <strong>not functioning</strong>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusion-1" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-1">Conclusion:</h3>
+<p>Identifying outliers is crucial for: 1. <strong>Data Cleaning</strong> – Removing or correcting erroneous values (e.g., negative distances). 2. <strong>Feature Engineering</strong> – Handling extreme values appropriately (e.g., winsorization or transformations). 3. <strong>Modeling Impact</strong> – Deciding whether to retain or remove extreme values to improve analysis and predictions.</p>
+<p>Outliers will be further examined before proceeding with clustering and predictive analysis.</p>
+<p>Correlation Between Numerical Variables</p>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(Final_project_clean[numerical_columns].corr(), annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">"coolwarm"</span>, fmt<span class="op">=</span><span class="st">".2f"</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Correlation Matrix of Numerical Variables'</span>)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-33-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="correlation-analysis-of-numerical-variables" class="level2">
+<h2 class="anchored" data-anchor-id="correlation-analysis-of-numerical-variables">Correlation Analysis of Numerical Variables</h2>
+<p>A <strong>correlation matrix</strong> was generated to examine the relationships between numerical variables. The heatmap visualizes the strength and direction of these correlations:</p>
+<section id="key-observations" class="level3">
+<h3 class="anchored" data-anchor-id="key-observations">Key Observations:</h3>
+<ul>
+<li><strong>Water Pump Age vs.&nbsp;Installation Year</strong>: Strong <strong>negative correlation</strong>
+<ul>
+<li>Older pumps correspond to earlier installation years, which is expected.</li>
+<li>This confirms that <strong>Water Pump Age</strong> is effectively derived from <strong>Installation Year</strong>.</li>
+</ul></li>
+<li><strong>Population Served vs.&nbsp;Distance to Nearest Town</strong>: Weak correlation
+<ul>
+<li>No strong relationship observed, indicating that pumps serving large populations are not necessarily located farther or closer to towns.</li>
+</ul></li>
+<li><strong>Other Variables</strong>: Low correlation values
+<ul>
+<li>Most numerical features in the dataset appear to be <strong>weakly correlated</strong>, meaning each provides distinct information.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusion-2" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-2">Conclusion:</h3>
+<ul>
+<li>The <strong>negative correlation between Installation Year and Water Pump Age</strong> suggests <strong>multicollinearity</strong>, which might need to be addressed in predictive modeling.</li>
+<li><strong>No highly correlated features</strong> were found among <code>Distance to Nearest Town</code>, <code>Population Served</code>, and <code>Functioning Status</code>, indicating that these variables can contribute independently to further analysis (such as clustering or predictive modeling).</li>
+</ul>
+<p>If you see correlation values:</p>
+<p>Close to +1 or -1 → Strong relationship Between -0.3 and 0.3 → Weak or no relationship Between 0.3 and 0.7 → Moderate relationship</p>
+<p>Trends over time for installation Year</p>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>Final_project_clean, x<span class="op">=</span><span class="st">'Installation Year'</span>, y<span class="op">=</span><span class="st">'Population Served'</span>, hue<span class="op">=</span><span class="st">'Functioning Status'</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Population Served Over Time'</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-34-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="population-served-over-time-by-functioning-status" class="level2">
+<h2 class="anchored" data-anchor-id="population-served-over-time-by-functioning-status">Population Served Over Time by Functioning Status</h2>
+<p>A scatterplot was generated to examine the relationship between <strong>Installation Year</strong> and <strong>Population Served</strong>, with the data points color-coded by the pump’s <strong>Functioning Status</strong>.</p>
+<section id="key-observations-1" class="level3">
+<h3 class="anchored" data-anchor-id="key-observations-1">Key Observations:</h3>
+<ul>
+<li>There is <strong>no clear trend</strong> indicating that newer installations consistently serve larger populations.</li>
+<li>Both <strong>functioning and non-functioning pumps</strong> are distributed across all installation years and population sizes.</li>
+<li>However, older installations (pre-2000) show a slightly <strong>higher proportion of non-functioning pumps</strong>, indicating that <strong>age of the pump</strong> could be contributing to functionality issues.</li>
+<li>The population served ranges widely across all installation years, with some pumps serving very large populations regardless of installation date.</li>
+</ul>
+</section>
+<section id="conclusion-3" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-3">Conclusion:</h3>
+<p>This plot helps highlight that <strong>functioning status may be weakly related to installation year</strong> — older pumps appear slightly more prone to failure. However, population size alone does not appear to be a strong driver of functionality issues. This insight can guide further exploration, such as analyzing pump type, water source, or payment type in relation to functioning status.</p>
+<p>Check Relationships to Functioning Status</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> numerical_columns:</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    sns.boxplot(data<span class="op">=</span>Final_project_clean, x<span class="op">=</span><span class="st">'Functioning Status'</span>, y<span class="op">=</span>col)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> vs Functioning Status'</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-35-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-35-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-35-output-3.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-35-output-4.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="numerical-variables-vs.-functioning-status" class="level2">
+<h2 class="anchored" data-anchor-id="numerical-variables-vs.-functioning-status">Numerical Variables vs.&nbsp;Functioning Status</h2>
+<p>Boxplots were created to explore the relationship between each <strong>numerical variable</strong> and the <strong>functioning status</strong> of the water pumps. This helps identify whether certain numerical characteristics (e.g., age, population served, distance to town) differ between <strong>functioning</strong> and <strong>non-functioning</strong> pumps.</p>
+<section id="key-observations-2" class="level3">
+<h3 class="anchored" data-anchor-id="key-observations-2">Key Observations</h3>
+<ul>
+<li><strong>Distance to Nearest Town vs.&nbsp;Functioning Status</strong>:
+<ul>
+<li>Functioning and non-functioning pumps have fairly similar distance distributions.</li>
+<li>This suggests that <strong>distance to the nearest town may not have a strong influence</strong> on functionality.</li>
+</ul></li>
+<li><strong>Population Served vs.&nbsp;Functioning Status</strong>:
+<ul>
+<li>Non-functioning pumps show a slightly wider spread in population served, indicating that pumps serving <strong>larger populations</strong> could face more stress or maintenance challenges.</li>
+<li>However, the median population served is very similar between the two groups, meaning this is not a strong driver on its own.</li>
+</ul></li>
+<li><strong>Installation Year vs.&nbsp;Functioning Status</strong>:
+<ul>
+<li>Non-functioning pumps tend to have slightly earlier installation years, aligning with the hypothesis that <strong>older pumps are more likely to fail</strong>.</li>
+<li>However, non-functioning pumps exist across all installation years, meaning age alone does not fully explain pump failure.</li>
+</ul></li>
+<li><strong>Water Pump Age vs.&nbsp;Functioning Status</strong>:
+<ul>
+<li>Non-functioning pumps are <strong>generally older</strong>, with a higher median age compared to functioning pumps.</li>
+<li>This supports the idea that <strong>older pumps are at greater risk of failure</strong>, likely due to wear and tear over time.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusion-4" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-4">Conclusion</h3>
+<ul>
+<li><strong>Water Pump Age</strong> appears to have the <strong>strongest relationship</strong> with functionality, reinforcing the importance of <strong>preventative maintenance and timely replacements</strong>.</li>
+<li>Other numerical variables like <strong>Distance to Nearest Town</strong> and <strong>Population Served</strong> show <strong>weaker or inconsistent relationships</strong> with functioning status, suggesting that non-numeric factors (like pump type, water source type, or funder practices) may play a larger role in functionality.</li>
+</ul>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>Final_project_clean.to_csv(<span class="st">'Final_project_clean.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>Final_project_clean, x<span class="op">=</span><span class="st">"Distance to Nearest Town"</span>, binwidth<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>numerical_columns <span class="op">=</span> [<span class="st">'Distance to Nearest Town'</span>, <span class="st">'Population Served'</span>, <span class="st">'Installation Year'</span>, <span class="st">'Water Pump Age'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-37-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>Final_project_clean, x<span class="op">=</span><span class="st">"Population Served"</span>, binwidth<span class="op">=</span><span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="37">
+<pre><code>&lt;Axes: xlabel='Population Served', ylabel='Count'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-38-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>Final_project_clean, x<span class="op">=</span><span class="st">"Installation Year"</span>, binwidth<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>&lt;Axes: xlabel='Installation Year', ylabel='Count'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-39-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>Final_project_clean, x<span class="op">=</span><span class="st">"Water Pump Age"</span>, binwidth<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<pre><code>&lt;Axes: xlabel='Water Pump Age', ylabel='Count'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-40-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>Final_project_clean, x<span class="op">=</span><span class="st">"Distance to Nearest Town"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<pre><code>&lt;Axes: xlabel='Distance to Nearest Town'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-41-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>Final_project_clean, x<span class="op">=</span><span class="st">"Population Served"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<pre><code>&lt;Axes: xlabel='Population Served'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-42-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>Final_project_clean, x<span class="op">=</span><span class="st">"Installation Year"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="42">
+<pre><code>&lt;Axes: xlabel='Installation Year'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-43-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>Final_project_clean, x<span class="op">=</span><span class="st">"Water Pump Age"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="43">
+<pre><code>&lt;Axes: xlabel='Water Pump Age'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="python-projects-4_files/figure-html/cell-44-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center"><a href="https://github.com/YOUR_USERNAME">GitHub</a> • <a href="https://www.linkedin.com/in/YOUR_USERNAME">LinkedIn</a></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

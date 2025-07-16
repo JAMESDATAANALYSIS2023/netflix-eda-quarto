@@ -1,0 +1,103 @@
+---
+title: "Python Projects"
+format: html
+execute: 
+  
+  kernel: python3
+  engine: jupyter
+---
+
+
+
+librara
+
+```{r}
+library(reticulate)
+
+# Replace this with your actual Python path if it's different
+use_python("C:/Users/jgpet/AppData/Local/Programs/Python/Python312/python.exe", required = TRUE)
+```
+
+
+
+Project: Customer Insights Using COIL 2000 & Bank Marketing Data
+
+"Unlocking Business Value through Predictive Analytics"
+
+In today’s data-driven economy, financial and insurance companies must harness the power of analytics to understand customer behavior, enhance retention, and optimize marketing strategies. This project applies supervised machine learning and clustering techniques to two real-world datasets using Python and its rich ecosystem of libraries.
+
+🧰 Tools & Libraries
+
+The analysis leverages the following Python libraries:
+
+* pandas for data manipulation and preprocessing
+
+* numpy for numerical operations
+
+* matplotlib and seaborn for visualizations
+
+* scikit-learn for classification models and clustering (e.g., KMeans)
+
+* plotly for interactive visuals
+
+* imbalanced-learn for handling class imbalance (if applicable)
+
+Bank Marketing Dataset
+
+Source: UCI Machine Learning Repository
+
+Description: Collected from a Portuguese banking institution, this dataset records results of a direct marketing campaign aimed at promoting term deposits. It includes features like age, job, marital status, previous contact outcomes, and a target variable indicating subscription.
+
+🎯 Project Objectives
+
+* Predict customer responses to marketing campaigns
+
+* Identify high-value segments using clustering algorithms
+
+* Reduce customer churn through classification models
+
+* Visualize trends and feature relationships through interactive dashboards
+
+
+```{python}
+# This code imports the os as a module to interact with the operating system
+import os
+
+# To display the current working directory to identity where Python is excecuting the scripts.
+print("Current working directory:", os.getcwd())
+
+```
+fff
+```{python}
+from ucimlrepo import fetch_ucirepo 
+  
+# fetch dataset 
+bank_marketing = fetch_ucirepo(id=222) 
+  
+# data (as pandas dataframes) 
+X = bank_marketing.data.features 
+y = bank_marketing.data.targets 
+  
+# metadata 
+print(bank_marketing.metadata) 
+  
+# variable information 
+print(bank_marketing.variables) 
+```
+
+
+
+Now that the working directory is set to the correct location we can load the files for processing.
+
+
+```{python}
+import pandas as pd
+
+df = pd.read_csv("bank-full.csv")
+df.head()
+```
+dddd
+```{python}
+df
+```
+

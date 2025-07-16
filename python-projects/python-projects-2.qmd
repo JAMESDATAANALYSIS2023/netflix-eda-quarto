@@ -1,0 +1,19 @@
+---
+title: "Python Projects"
+format: html
+execute: 
+  
+  kernel: python3
+  engine: jupyter
+---
+
+About this site
+
+```{python}
+import pandas as pd
+df = pd.DataFrame({
+  "Name": ["Alice", "Bob", "Charlie"],
+  "Score": [92, 88, 79]
+})
+df
+```

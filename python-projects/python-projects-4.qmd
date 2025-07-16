@@ -1,0 +1,487 @@
+---
+title: Numerical_eda
+format: html
+jupyter: python3
+---
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+
+```{python}
+# This code imports the os as a module to interact with the operating system
+import os
+
+# To display the current working directory to identity where Python is excecuting the scripts.
+print("Current working directory:", os.getcwd())
+```
+
+```{python}
+# Change the working directory to the folder containing the file
+os.chdir(r"C:\Users\jgpet\OneDrive\Desktop\Gradiate school\2025\DSCI 5240\Final Project")
+
+# Verify the change
+print("New working directory:", os.getcwd())
+```
+
+```{python}
+# Load data file inot python as a pandas data frame
+# Load data into Data frame using row 1 as the header
+Final_project = pd.read_csv("DSCI 5240 Project Data.csv", header=0)
+```
+
+```{python}
+# Ensure all columns are displayed in a table format
+pd.set_option("display.max_rows", None)
+pd.set_option("display.max_columns", None)
+pd.set_option("display.width", 1000)
+pd.set_option("display.colheader_justify", "center")
+
+Final_project.head()
+```
+
+1. Categorical variables: Water Source Type, Water Quality, Funder, Payment Type, Pump Type, Functioning Status
+2. Integer: Installation Year, Water Pump Age, Distance to Nearest Town, Population Served
+
+```{python}
+Final_project.info()
+```
+
+```{python}
+Final_project.value_counts("Water Source Type")
+```
+
+Water Source has 4 categories
+
+```{python}
+Final_project.value_counts("Water Quality")
+```
+
+Water Source has 3 categories
+
+```{python}
+Final_project.value_counts("Funder")
+```
+
+Water Source has 6 categories
+
+```{python}
+Final_project.value_counts("Payment Type")
+```
+
+Water Source has 3 categories
+
+```{python}
+Final_project.value_counts("Pump Type")
+```
+
+Water Source has 4 categories
+
+```{python}
+Final_project.value_counts("Functioning Status")
+```
+
+Water Source has 3 categories
+
+```{python}
+# For numerical columns
+
+Final_project.describe()
+```
+
+1. Should we convert to Ineger?
+
+```{python}
+# Display missing values count for each column
+Final_project.isnull().sum()
+```
+
+A. Handle missing values
+
+1. categorical_columns: Water Source Type, Water Quality, Funder, Payment Type, Pump Type, Functioning Status filled with mode
+2. numerical_columns: Distance to Nearest Town, Population Served, Installation Year, Water Pump Age filed with the median
+3. Dropped columns Water Pump ID and GPS Coordinates
+
+```{python}
+# Fill categorical columns with the mode
+categorical_columns = ['Water Source Type', 'Water Quality', 'Funder', 'Payment Type', 'Pump Type', 'Functioning Status']
+
+for column in categorical_columns:
+    Final_project[column] = Final_project[column].fillna(Final_project[column].mode()[0])
+
+# Fill numerical columns with the median
+numerical_columns = ['Distance to Nearest Town', 'Population Served', 'Installation Year', 'Water Pump Age']
+
+for column in numerical_columns:
+    Final_project[column] = Final_project[column].fillna(Final_project[column].median())
+```
+
+```{python}
+# to drop columns Water Pump ID and GPS Coordinates: Do they add value to the dataset?
+Final_project_clean = Final_project.drop(columns=['Water Pump ID', 'GPS Coordinates'])
+```
+
+```{python}
+Final_project_clean.info()
+```
+
+Data types
+1. Convert to string: Water Source Type, Water Quality, Funder, Payment Type, Pump Type, Functioning Status
+2. Convert to Integer Installation Year, Water Pump Age, Distance to Nearest Town, Population Served? 
+
+```{python}
+# Convert data types to strings
+Final_project_clean['Water Source Type'] = Final_project_clean['Water Source Type'].astype('category')
+Final_project_clean['Water Quality'] = Final_project_clean['Water Quality'].astype('category')
+Final_project_clean['Funder'] = Final_project_clean['Funder'].astype('category')
+Final_project_clean['Payment Type'] = Final_project_clean['Payment Type'].astype('category')
+Final_project_clean['Pump Type'] = Final_project_clean['Pump Type'].astype('category')
+Final_project_clean['Functioning Status'] = Final_project_clean['Functioning Status'].astype('category')
+```
+
+```{python}
+# Convert data types to Integer: Installation Year, Water Pump Age, Distance to Nearest Town, Population Served
+Final_project_clean['Installation Year'] = Final_project_clean['Installation Year'].astype('int')
+Final_project_clean['Water Pump Age'] = Final_project_clean['Water Pump Age'].astype('int')
+Final_project_clean['Distance to Nearest Town'] = Final_project_clean['Distance to Nearest Town'].astype('int')
+Final_project_clean['Population Served'] = Final_project_clean['Population Served'].astype('int')
+```
+
+```{python}
+Final_project_clean.info()
+```
+
+```{python}
+Final_project_clean.head()
+```
+
+Categorical Values
+
+```{python}
+Final_project_clean.value_counts("Water Source Type")
+```
+
+```{python}
+Final_project_clean.value_counts("Water Quality")
+```
+
+```{python}
+Final_project_clean.value_counts("Funder")
+```
+
+```{python}
+Final_project_clean.value_counts("Payment Type")
+```
+
+```{python}
+Final_project_clean.value_counts("Pump Type")
+```
+
+```{python}
+Final_project_clean.value_counts("Functioning Status")
+```
+
+```{python}
+# For numerical columns
+
+
+Final_project_clean.describe()
+```
+
+
+### Range: Min & Max
+
+**Distance to Nearest Town**: Min: -3.0 Max: 76.0,
+**Population Served**: Min: 2000.0 Max: 22000.0, 
+**Installation Year**: Min: 1990.0 Max: 2020.0,
+**Water Pump Age**: Min: 4.0 Max: 34.0
+
+**Note:** The Distance to Nearest Town has an **invalid values of -3.0**, which is not feasible for a geographic distance. 
+This will require **data cleaning** to remove or correct the invalid entry.
+
+
+Skewness Analysis: Mean vs. Median
+
+```{python}
+numerical_columns = ['Distance to Nearest Town', 'Population Served', 'Installation Year', 'Water Pump Age']
+
+for col in numerical_columns:
+    mean_val = Final_project_clean[col].mean()
+    median_val = Final_project_clean[col].median()
+    print(f"{col}: Mean = {mean_val:.2f}, Median = {median_val:.2f}")
+    if mean_val > median_val:
+        print(f"{col} appears to be **right-skewed** (mean > median)\n")
+    elif mean_val < median_val:
+        print(f"{col} appears to be **left-skewed** (mean < median)\n")
+    else:
+        print(f"{col} appears to be **symmetric** (mean ≈ median)\n")
+```
+
+## Skewness Analysis: Mean vs. Median: Are the vaiables skewed
+
+- **Population Served**: Mean = 13019.2, Median = 13000  
+  This suggests that the distribution is approximately **symmetric**.
+
+- **Distance to Nearest Town**: Mean = 33.7, Median = 35  
+  This indicates a slight **left skew**, potentially due to the invalid `-3` value, which will be addressed during data cleaning.
+
+- **Installation Year**: Mean = 2005.1, Median = 2005  
+  This distribution is approximately **symmetric**.
+
+- **Water Pump Age**: Mean = 18.9, Median = 19  
+  This distribution is approximately **symmetric**.
+
+### Summary
+The skewness analysis helps us identify whether each numerical variable has a balanced distribution or is influenced by **outliers** or **natural skewness** (e.g., older pumps might be rare, shifting the age distribution). This is important when choosing modeling techniques later.
+
+Standard Deviation
+***What Does Standard Deviation Tell You?***
+    
+* Low Standard Deviation: Data points are close to the mean (low spread).
+* High Standard Deviation: Data points are widely spread out from the mean.
+* Comparing the standard deviation to the mean gives a sense of relative spread.
+
+## Analysis of Spread: Standard Deviation
+
+### Distance to Nearest Town
+- Mean: 33.68 km
+- Standard Deviation: 13.85 km
+- Interpretation: There is **moderate spread** — some pumps are very close to towns, while others are quite far away. 
+- This wide spread may affect accessibility and maintenance.
+
+### Population Served
+- Mean: 13019.2 people
+- Standard Deviation: 2899.47 people
+- Interpretation: There is a **large spread** in population served, indicating that some water points serve much larger communities 
+- than others. This variance could impact pump wear and tear, water quality, and functionality.
+
+### Installation Year
+- Mean: 2005.12
+- Standard Deviation: 8.67 years
+- Interpretation: This is a **relatively low spread**, meaning most pumps were installed within a similar timeframe. This could indicate 
+- consistent development efforts over time.
+
+### Water Pump Age
+- Mean: 18.93 years
+- Standard Deviation: 8.66 years
+- Interpretation: Pump age shows **moderate spread**, with some pumps significantly older than others. Older pumps may be more prone 
+- to breakdowns, which could explain patterns seen in the `Functioning Status` if any.
+
+```{python}
+for col in numerical_columns:
+    plt.figure(figsize=(8, 4))
+    sns.histplot(Final_project_clean[col], kde=True, bins=20)
+    plt.title(f'Distribution of {col}')
+    plt.show()
+```
+
+## Distribution Analysis of Numerical Variables
+
+To better understand the **spread and shape** of the numerical variables in the dataset, histograms with density curves (KDE) were generated for:
+
+- Distance to Nearest Town
+- Population Served
+- Installation Year
+- Water Pump Age
+
+### Observations
+
+- **Distance to Nearest Town**: 
+    - The distribution appears roughly **bimodal**, indicating two distinct groups — pumps either located very close to towns, or much farther away.
+    - The presence of a negative distance (anomalous value) was also detected and will require data cleaning.
+
+- **Population Served**:
+    - The distribution is **slightly right-skewed**, meaning a small number of pumps serve very large populations compared to the majority.
+    - This skewness could indicate a few **outliers** — large water systems serving exceptionally large communities.
+
+- **Installation Year**:
+    - The data is **centered around the 2000s**, showing a peak in installations during that period.
+    - The distribution confirms that most pumps were installed between 1995 and 2015, aligning with global infrastructure development initiatives.
+
+- **Water Pump Age**:
+    - The age distribution is fairly **even**, but slightly skewed toward older pumps.
+    - This suggests that some pumps have been operational for much longer than others, potentially impacting their functionality.
+
+### Conclusion
+
+These distributions provide valuable insight into the **data’s characteristics**, potential **outliers**, and **patterns** that could influence later analysis, such as clustering or modeling pump functionality.
+
+```{python}
+# To detect outliers
+plt.figure(figsize=(12, 8))
+for i, col in enumerate(numerical_columns, 1):
+    plt.subplot(2, 2, i)
+    sns.boxplot(x=Final_project_clean[col])
+    plt.title(f'Boxplot of {col}')
+plt.tight_layout()
+plt.show()
+```
+
+## Outlier Detection Using Boxplots
+
+Boxplots were generated for the numerical variables to **identify potential outliers** and analyze the spread of the data. 
+
+### Observations:
+- **Distance to Nearest Town**:
+  - A negative value (-3) was detected, which is an invalid distance and will require data cleaning.
+  - There are a few high-distance values that might be legitimate but should be investigated.
+
+- **Population Served**:
+  - Some extreme values appear on the higher end, indicating that a few pumps serve significantly larger populations.
+  - This could be due to large-scale water distribution systems, but further investigation is needed to determine if these are **valid or data entry errors**.
+
+- **Installation Year**:
+  - No significant outliers detected. The values fall within a reasonable range (1990–2020), aligning with expected infrastructure development trends.
+
+- **Water Pump Age**:
+  - Some older pumps seem to be outliers, but given that pumps can remain operational for long periods, these might be valid.
+  - Further analysis could explore whether older pumps have a higher likelihood of **not functioning**.
+
+### Conclusion:
+Identifying outliers is crucial for:
+1. **Data Cleaning** – Removing or correcting erroneous values (e.g., negative distances).
+2. **Feature Engineering** – Handling extreme values appropriately (e.g., winsorization or transformations).
+3. **Modeling Impact** – Deciding whether to retain or remove extreme values to improve analysis and predictions.
+
+Outliers will be further examined before proceeding with clustering and predictive analysis.
+
+
+Correlation Between Numerical Variables
+
+```{python}
+plt.figure(figsize=(8,6))
+sns.heatmap(Final_project_clean[numerical_columns].corr(), annot=True, cmap="coolwarm", fmt=".2f")
+plt.title('Correlation Matrix of Numerical Variables')
+plt.show()
+```
+
+## Correlation Analysis of Numerical Variables
+
+A **correlation matrix** was generated to examine the relationships between numerical variables. The heatmap visualizes the strength and direction of these correlations:
+
+### Key Observations:
+- **Water Pump Age vs. Installation Year**: Strong **negative correlation**  
+  - Older pumps correspond to earlier installation years, which is expected.
+  - This confirms that **Water Pump Age** is effectively derived from **Installation Year**.
+  
+- **Population Served vs. Distance to Nearest Town**: Weak correlation  
+  - No strong relationship observed, indicating that pumps serving large populations are not necessarily located farther or closer to towns.
+  
+- **Other Variables**: Low correlation values  
+  - Most numerical features in the dataset appear to be **weakly correlated**, meaning each provides distinct information.
+
+### Conclusion:
+- The **negative correlation between Installation Year and Water Pump Age** suggests **multicollinearity**, which might need to be addressed in predictive modeling.
+- **No highly correlated features** were found among `Distance to Nearest Town`, `Population Served`, and `Functioning Status`, indicating that these variables can contribute independently to further analysis (such as clustering or predictive modeling).
+
+If you see correlation values:
+
+Close to +1 or -1 → Strong relationship
+Between -0.3 and 0.3 → Weak or no relationship
+Between 0.3 and 0.7 → Moderate relationship
+
+Trends over time for installation Year
+
+```{python}
+sns.scatterplot(data=Final_project_clean, x='Installation Year', y='Population Served', hue='Functioning Status')
+plt.title('Population Served Over Time')
+plt.show()
+```
+
+## Population Served Over Time by Functioning Status
+
+A scatterplot was generated to examine the relationship between **Installation Year** and **Population Served**, with the data points color-coded by the pump’s **Functioning Status**.
+
+### Key Observations:
+- There is **no clear trend** indicating that newer installations consistently serve larger populations.
+- Both **functioning and non-functioning pumps** are distributed across all installation years and population sizes.
+- However, older installations (pre-2000) show a slightly **higher proportion of non-functioning pumps**, indicating that **age of the pump** could be contributing to functionality issues.
+- The population served ranges widely across all installation years, with some pumps serving very large populations regardless of installation date.
+
+### Conclusion:
+This plot helps highlight that **functioning status may be weakly related to installation year** — older pumps appear slightly more prone to failure. However, population size alone does not appear to be a strong driver of functionality issues. This insight can guide further exploration, such as analyzing pump type, water source, or payment type in relation to functioning status.
+
+Check Relationships to Functioning Status
+
+```{python}
+for col in numerical_columns:
+    plt.figure(figsize=(8, 4))
+    sns.boxplot(data=Final_project_clean, x='Functioning Status', y=col)
+    plt.title(f'{col} vs Functioning Status')
+    plt.show()
+```
+
+## Numerical Variables vs. Functioning Status
+
+Boxplots were created to explore the relationship between each **numerical variable** and the **functioning status** of the water pumps. This helps identify whether certain numerical characteristics (e.g., age, population served, distance to town) differ between **functioning** and **non-functioning** pumps.
+
+### Key Observations
+
+- **Distance to Nearest Town vs. Functioning Status**:
+    - Functioning and non-functioning pumps have fairly similar distance distributions.
+    - This suggests that **distance to the nearest town may not have a strong influence** on functionality.
+
+- **Population Served vs. Functioning Status**:
+    - Non-functioning pumps show a slightly wider spread in population served, indicating that pumps serving **larger populations** could face more stress or maintenance challenges.
+    - However, the median population served is very similar between the two groups, meaning this is not a strong driver on its own.
+
+- **Installation Year vs. Functioning Status**:
+    - Non-functioning pumps tend to have slightly earlier installation years, aligning with the hypothesis that **older pumps are more likely to fail**.
+    - However, non-functioning pumps exist across all installation years, meaning age alone does not fully explain pump failure.
+
+- **Water Pump Age vs. Functioning Status**:
+    - Non-functioning pumps are **generally older**, with a higher median age compared to functioning pumps.
+    - This supports the idea that **older pumps are at greater risk of failure**, likely due to wear and tear over time.
+
+### Conclusion
+
+- **Water Pump Age** appears to have the **strongest relationship** with functionality, reinforcing the importance of **preventative maintenance and timely replacements**.
+- Other numerical variables like **Distance to Nearest Town** and **Population Served** show **weaker or inconsistent relationships** with functioning status, suggesting that non-numeric factors (like pump type, water source type, or funder practices) may play a larger role in functionality.
+
+
+```{python}
+Final_project_clean.to_csv('Final_project_clean.csv', index=False)
+```
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.histplot(data=Final_project_clean, x="Distance to Nearest Town", binwidth=10)
+
+
+numerical_columns = ['Distance to Nearest Town', 'Population Served', 'Installation Year', 'Water Pump Age']
+
+```
+
+```{python}
+sns.histplot(data=Final_project_clean, x="Population Served", binwidth=200)
+```
+
+```{python}
+sns.histplot(data=Final_project_clean, x="Installation Year", binwidth=1)
+```
+
+```{python}
+sns.histplot(data=Final_project_clean, x="Water Pump Age", binwidth=1)
+```
+
+```{python}
+sns.boxplot(data=Final_project_clean, x="Distance to Nearest Town")
+```
+
+```{python}
+sns.boxplot(data=Final_project_clean, x="Population Served")
+```
+
+```{python}
+sns.boxplot(data=Final_project_clean, x="Installation Year")
+```
+
+```{python}
+sns.boxplot(data=Final_project_clean, x="Water Pump Age")
+```
+
+

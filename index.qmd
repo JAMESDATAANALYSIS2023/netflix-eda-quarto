@@ -1,0 +1,35 @@
+---
+title: "Turning Data into Insight — One Project at a Time"
+format:
+  html:
+    toc: false
+    theme: darkly
+    css: styles.css
+    page-layout: full
+    mainfont: "Lato"
+---
+
+Hello and thank you for visiting! I’m **James Peters**, a passionate data professional with a strong foundation in analytics, business strategy, and process improvement.
+
+This portfolio showcases a curated selection of my favorite projects in **R**, **Python**, **Excel**, and **Six Sigma** — each solving real-world challenges through data-driven insight.
+
+------------------------------------------------------------------------
+
+Whether it's building predictive models, streamlining business operations, or visualizing key performance metrics, I approach every problem with **curiosity**, **creativity**, and a drive for **clarity** and **impact**.
+
+### 🔍 What You’ll Find Here:
+
+-   📊 R Projects focused on statistical modeling and visualization\
+-   🐍 Python Projects for machine learning, automation, and APIs\
+-   📈 Excel Dashboards for quick insights and business KPIs\
+-   ⚙️ Six Sigma projects improving processes through Lean methodology
+
+------------------------------------------------------------------------
+
+> *"I believe data isn't just about numbers — it's about momentum, meaning, and making a difference."*
+
+------------------------------------------------------------------------
+
+::: {style="margin-top: 20px;"}
+<a href="https://github.com/YOUR-GITHUB" class="btn btn-light btn-sm" role="button" target="_blank">🔗 GitHub</a> <a href="https://linkedin.com/in/YOUR-LINKEDIN" class="btn btn-light btn-sm" role="button" target="_blank">🔗 LinkedIn</a>
+:::

@@ -1,0 +1,47 @@
+project:
+  type: website
+
+website:
+  title: "James Peters | Data & Analytics"
+  navbar:
+    left:
+      - text: Home
+        href: index.qmd
+      - text: About Me
+        href: about Me.qmd
+      - text: Featured Projects
+        href: Netflix2.qmd
+    # - text: R Projects
+    #   menu:
+    #     - text: Project Listing
+    #       href: r-projects/index.qmd
+    # - text: Python Projects
+    #    menu:
+    #     - text: Project Listing
+    #       href: python-projects/index.qmd
+    # - text: Excel Projects
+    #   menu:
+    #     - text: Project Listing
+    #       href: excel-projects/index.qmd
+    # - text: Six Sigma Projects
+    #   menu:
+    #     - text: Project Listing
+    #       href: six-sigma-projects/index.qmd
+  page-footer:
+    center: |
+      [GitHub](https://github.com/YOUR_USERNAME) •
+      [LinkedIn](https://www.linkedin.com/in/YOUR_USERNAME)
+
+format:
+  html:
+    theme: darkly
+    css: styles.css
+    toc: true
+
+execute:
+  engine: jupyter
+  echo: true
+  freeze: auto
+
+editor: visual
+

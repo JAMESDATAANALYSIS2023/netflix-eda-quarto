@@ -1,0 +1,8 @@
+---
+title: "Featured Projects"
+format: html
+---
+
+## My Featured Projects.
+
+-   [Featured Project](Netflix2.qmd) #- [Project 2](python-projects-2.qmd)
