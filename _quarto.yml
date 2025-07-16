@@ -29,8 +29,8 @@ website:
     #       href: six-sigma-projects/index.qmd
   page-footer:
     center: |
-      [GitHub](https://github.com/YOUR_USERNAME) •
-      [LinkedIn](https://www.linkedin.com/in/YOUR_USERNAME)
+      [GitHub](https://github.com/JAMESDATAANALYSIS2023) •
+      [LinkedIn](https://www.linkedin.com/in/jpeters-jr/)
 
 format:
   html:
