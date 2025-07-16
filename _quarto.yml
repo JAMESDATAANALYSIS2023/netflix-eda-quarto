@@ -28,7 +28,7 @@ website:
     #     - text: Project Listing
     #       href: six-sigma-projects/index.qmd
   page-footer:
-   center: "[GitHub](https://github.com/JAMESDATAANALYSIS2023) . [LinkedIn](https://www.linkedin.com/in/jgpeters-jr/)"
+   center: "[GitHub](https://github.com/JAMESDATAANALYSIS2023) . [LinkedIn](https://www.linkedin.com/in/jpeters-jr/)"
 
 format:
   html:
