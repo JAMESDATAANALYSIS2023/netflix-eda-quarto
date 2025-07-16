@@ -31,5 +31,5 @@ Whether it's building predictive models, streamlining business operations, or vi
 ------------------------------------------------------------------------
 
 ::: {style="margin-top: 20px;"}
-<a href="https://github.com/YOUR-GITHUB" class="btn btn-light btn-sm" role="button" target="_blank">🔗 GitHub</a> <a href="https://linkedin.com/in/YOUR-LINKEDIN" class="btn btn-light btn-sm" role="button" target="_blank">🔗 LinkedIn</a>
+<a href="https://github.com/JAMESDATAANALYSIS2023" class="btn btn-light btn-sm" role="button" target="_blank">🔗 GitHub</a> <a href="https://linkedin.com/in/jpeters-jr/" class="btn btn-light btn-sm" role="button" target="_blank">🔗 LinkedIn</a>
 :::
